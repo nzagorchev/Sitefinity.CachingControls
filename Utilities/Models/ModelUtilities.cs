@@ -1,11 +1,10 @@
-﻿using SitefinityWebApp.Utilities.Models;
-using System.Linq;
+﻿using System.Linq;
 using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.RelatedData;
 
-namespace SitefinityWebApp.Utilities
+namespace SitefinityWebApp.Utilities.Models
 {
     public static class ModelUtilities
     {

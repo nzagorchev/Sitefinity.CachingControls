@@ -1,18 +1,13 @@
-﻿using SitefinityWebApp.Utilities;
+﻿using SitefinityWebApp.Utilities.Cache;
 using SitefinityWebApp.Utilities.Models;
 using System;
-using System.Linq;
 using System.Web.UI;
 using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Microsoft.Practices.EnterpriseLibrary.Caching.Expirations;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Model;
-using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
-using Telerik.Sitefinity.RelatedData;
-using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web.UI;
 
 namespace SitefinityWebApp.Navigation.Controls
@@ -95,13 +90,13 @@ namespace SitefinityWebApp.Navigation.Controls
                 return null;
             }
 
-            string cacheKey = this.BuildCacheKey(id.ToString());
-            var model = (PageSiteNodeModel)this.CacheManager[cacheKey];
+            string cacheKey = CacheUtilities.BuildCacheKey(NavigationSubControl.cacheKey, id.ToString());
+            var model = (PageSiteNodeModel)CacheUtilities.CacheManagerGlobal[cacheKey];
             if (model == null)
             {
                 lock (this.nodeDataLock)
                 {
-                    model = (PageSiteNodeModel)this.CacheManager[cacheKey];
+                    model = (PageSiteNodeModel)CacheUtilities.CacheManagerGlobal[cacheKey];
                     if (model == null)
                     {
                         PageManager manager = PageManager.GetManager();
@@ -118,7 +113,7 @@ namespace SitefinityWebApp.Navigation.Controls
                         model = new PageSiteNodeModel(redirectPage1,thumbnailImage1,
                             additionalText1,redirectButton1);
 
-                        this.CacheManager.Add(
+                        CacheUtilities.CacheManagerGlobal.Add(
                                 cacheKey,
                                 model,
                                 CacheItemPriority.Normal,
@@ -141,11 +136,6 @@ namespace SitefinityWebApp.Navigation.Controls
         {
             return ModelUtilities.GetRelatedPageModel(item, fieldName);
         }
-
-        private string BuildCacheKey(string key)
-        {
-            return string.Concat(NavigationSubControl.cacheKey, key.ToUpperInvariant());
-        }
         #endregion
 
         #region Private members & constants
@@ -154,14 +144,6 @@ namespace SitefinityWebApp.Navigation.Controls
         protected static readonly string cacheKey = "|pnad|id|";
 
         private object nodeDataLock = new object();
-
-        private ICacheManager CacheManager
-        {
-            get
-            {
-                return SystemManager.GetCacheManager(CacheManagerInstance.Global);
-            }
-        }
         #endregion
     }
 }
