@@ -1,4 +1,4 @@
-﻿namespace SitefinityWebApp.Navigation.Models
+﻿namespace SitefinityWebApp.Utilities.Models
 {
     public class ImageModel
     {

@@ -1,4 +1,4 @@
-﻿using SitefinityWebApp.Navigation.Models;
+﻿using SitefinityWebApp.Utilities.Models;
 using System.Web.UI;
 
 namespace SitefinityWebApp.Navigation.Controls

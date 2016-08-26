@@ -1,4 +1,5 @@
-﻿using SitefinityWebApp.Navigation.Models;
+﻿using SitefinityWebApp.Utilities;
+using SitefinityWebApp.Utilities.Models;
 using System;
 using System.Linq;
 using System.Web.UI;
@@ -19,6 +20,9 @@ namespace SitefinityWebApp.Navigation.Controls
     public class NavigationSubControl : SimpleView
     {
         #region Properties
+        /// <summary>
+        /// The PageNodeId the control will bind to
+        /// </summary>
         public string PageNodeId { get; set; }
         
         /// <summary>
@@ -130,30 +134,12 @@ namespace SitefinityWebApp.Navigation.Controls
 
         protected virtual ImageModel GetRelatedImageModel(object item, string fieldName)
         {
-            var model = new ImageModel();
-            var image = item.GetRelatedItems<Image>(fieldName).FirstOrDefault();
-            if (image != null)
-            {
-                model.Title = image.Title;
-                model.AlternativeText = image.AlternativeText;
-                model.ThumbnailUrl = image.ResolveThumbnailUrl();
-            }
-
-            return model;
+            return ModelUtilities.GetRelatedImageModel(item, fieldName);
         }
 
         protected virtual PageNodeModel GetRelatedPageModel(object item, string fieldName)
         {
-            var model = new PageNodeModel();
-            var relatedPage = item.GetRelatedItems<PageNode>(fieldName).FirstOrDefault();
-            if (relatedPage != null)
-            {
-                model.Title = relatedPage.Title;
-                model.OpenNewWindow = relatedPage.OpenNewWindow;
-                model.Url = Telerik.Sitefinity.RelatedData.RelatedDataExtensions.GetDefaultUrl(relatedPage);
-            }
-
-            return model;
+            return ModelUtilities.GetRelatedPageModel(item, fieldName);
         }
 
         private string BuildCacheKey(string key)
