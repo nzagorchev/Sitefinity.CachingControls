@@ -10,6 +10,7 @@ namespace SitefinityWebApp.Navigation.Controls
             this.PageSiteNodeModel = pageNodeModel;
         }
 
+        // The Model the control uses
         public PageSiteNodeModel PageSiteNodeModel { get; set; }
 
         public object DataItem

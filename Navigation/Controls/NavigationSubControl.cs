@@ -60,6 +60,7 @@ namespace SitefinityWebApp.Navigation.Controls
             if (!string.IsNullOrEmpty(this.PageNodeId))
             {
                 PageSiteNodeModel pageNodeModel = this.GetPageSiteNodeModelByKey(new Guid(this.PageNodeId));
+                // Construct the control
                 PageNodeAdditionalDataControl item = new PageNodeAdditionalDataControl(pageNodeModel);
 
                 // Bind the item in the container
@@ -89,7 +90,7 @@ namespace SitefinityWebApp.Navigation.Controls
             {
                 return null;
             }
-
+            // Construct the cache key
             string cacheKey = CacheUtilities.BuildCacheKey(NavigationSubControl.cacheKey, id.ToString());
             var model = (PageSiteNodeModel)CacheUtilities.CacheManagerGlobal[cacheKey];
             if (model == null)
@@ -99,24 +100,30 @@ namespace SitefinityWebApp.Navigation.Controls
                     model = (PageSiteNodeModel)CacheUtilities.CacheManagerGlobal[cacheKey];
                     if (model == null)
                     {
+                        // Get the page node
                         PageManager manager = PageManager.GetManager();
                         var node = manager.GetPageNode(id);
 
+                        // Get the models from the node fields
                         var relatedPage = this.GetRelatedPageModel(node, "RelatedPage");
 
                         var relatedImage = this.GetRelatedImageModel(node, "RelatedImage");
 
                         string additionalInfo = node.GetValue<Lstring>("AdditionalInfo");
 
+                        // Build the Model
                         model = new PageSiteNodeModel(relatedPage, relatedImage,
                             additionalInfo);
 
+                        // Add the model in the cache
                         CacheUtilities.CacheManagerGlobal.Add(
                                 cacheKey,
                                 model,
                                 CacheItemPriority.Normal,
                                 null,
+                                // Add cache dependency for automatic invalidation
                                 new DataItemCacheDependency(typeof(PageNode), id),
+                                // Configure sliding time
                                 new SlidingTime(TimeSpan.FromMinutes(20)));
                     }
                 }
