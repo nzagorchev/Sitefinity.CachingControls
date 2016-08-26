@@ -6,22 +6,19 @@
         {
         }
 
-        public PageSiteNodeModel(PageNodeModel redirectPage1, ImageModel thumbnailImage1,
-            string additionalText1, string redirectButton1)
+        public PageSiteNodeModel(PageNodeModel relatedPage, ImageModel relatedImage,
+            string additionalInfo)
             : base()
         {
-            this.RedirectPage1 = redirectPage1;
-            this.ThumbnailImage1 = thumbnailImage1;
-            this.AdditionalText1 = additionalText1;
-            this.RedirectButton1 = redirectButton1;
+            this.RelatedPage = relatedPage;
+            this.RelatedImage = relatedImage;
+            this.AdditionalInfo = additionalInfo;
         }
 
-        public ImageModel ThumbnailImage1 { get; set; }
+        public ImageModel RelatedImage { get; set; }
 
-        public PageNodeModel RedirectPage1 { get; set; }
+        public PageNodeModel RelatedPage { get; set; }
 
-        public string AdditionalText1 { get; set; }
-
-        public string RedirectButton1 { get; set; }
+        public string AdditionalInfo { get; set; }
     }
 }

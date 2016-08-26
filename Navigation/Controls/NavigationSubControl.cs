@@ -19,7 +19,7 @@ namespace SitefinityWebApp.Navigation.Controls
         /// The PageNodeId the control will bind to
         /// </summary>
         public string PageNodeId { get; set; }
-        
+
         /// <summary>
         /// Obsolete. Use LayoutTemplatePath instead.
         /// </summary>
@@ -102,16 +102,14 @@ namespace SitefinityWebApp.Navigation.Controls
                         PageManager manager = PageManager.GetManager();
                         var node = manager.GetPageNode(id);
 
-                        var redirectPage1 = this.GetRelatedPageModel(node, "RedirectPage1");
+                        var relatedPage = this.GetRelatedPageModel(node, "RelatedPage");
 
-                        var thumbnailImage1 = this.GetRelatedImageModel(node, "ThumbnailImage1");
+                        var relatedImage = this.GetRelatedImageModel(node, "RelatedImage");
 
-                        string additionalText1 = node.GetValue<Lstring>("AdditionalText1");
+                        string additionalInfo = node.GetValue<Lstring>("AdditionalInfo");
 
-                        string redirectButton1 = node.GetValue<Lstring>("RedirectButton1");
-
-                        model = new PageSiteNodeModel(redirectPage1,thumbnailImage1,
-                            additionalText1,redirectButton1);
+                        model = new PageSiteNodeModel(relatedPage, relatedImage,
+                            additionalInfo);
 
                         CacheUtilities.CacheManagerGlobal.Add(
                                 cacheKey,
