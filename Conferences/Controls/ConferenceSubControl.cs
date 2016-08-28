@@ -161,8 +161,9 @@ namespace SitefinityWebApp.Conferences.Controls
             foreach (var session in sessions)
             {
                 var model = new SessionModel();
-                model.Title = session.GetValue<string>("Title");
+                model.Title = session.GetValue<Lstring>("Title");
                 model.Duration = session.GetValue<int>("Duration");
+                model.DetailUrl = session.GetDefaultUrl();
                 sessionsModels.Add(model);
             }
 
